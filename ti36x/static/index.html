@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>TI-36X Pro Emulator</title>
+  <link rel="stylesheet" href="/static/calc.css" />
+</head>
+<body>
+  <div class="app">
+    <div class="calc">
+      <div class="top-brand">
+        <div class="model-name">36X Pro Emulator</div>
+        <div class="solar-panel">
+          <div class="solar-cell"></div>
+          <div class="solar-cell"></div>
+          <div class="solar-cell"></div>
+          <div class="solar-cell"></div>
+        </div>
+      </div>
+
+      <div class="screen">
+        <div class="status-bar">
+          <span id="status-2nd" class="status-pill">2ND</span>
+          <span id="status-angle" class="status-pill">DEG</span>
+          <span id="status-mode" class="status-pill">NORMAL</span>
+          <span id="status-fmt" class="status-pill">FLOAT</span>
+        </div>
+        <div class="entry-line" id="entry-line">&nbsp;</div>
+        <div class="result-line" id="result-line">0</div>
+        <div class="error-line" id="error-line"></div>
+      </div>
+
+      <div class="control-strip">
+        <div class="control-left">
+          <button class="key key-2nd" data-name="2nd"><div class="label">2nd</div></button>
+          <button class="key key-mode" data-name="mode">
+            <div class="shift">quit</div><div class="label">mode</div>
+          </button>
+          <button class="key key-mode" data-name="delete">
+            <div class="shift">insert</div><div class="label">del</div>
+          </button>
+        </div>
+        <div class="nav-pad">
+          <button class="nav-btn nav-up"    data-name="up">▲</button>
+          <button class="nav-btn nav-left"  data-name="left">◀</button>
+          <button class="nav-btn nav-right" data-name="right">▶</button>
+          <button class="nav-btn nav-down"  data-name="down">▼</button>
+          <div class="nav-hub"></div>
+        </div>
+      </div>
+
+      <div class="menu-row" id="menu-row"></div>
+      <div class="keys" id="keys"></div>
+    </div>
+
+    <aside class="sidebar">
+      <h2>History</h2>
+      <ul id="history"></ul>
+      <h2>Connect</h2>
+      <p><code>HTTP :8765</code></p>
+      <p><code>MCP: ti36x</code></p>
+      <p class="hint">Click keys, type on your keyboard, or drive via API / MCP.</p>
+      <button id="reset-btn">Reset</button>
+    </aside>
+  </div>
+  <script src="/static/calc.js"></script>
+</body>
+</html>
