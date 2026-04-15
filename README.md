@@ -10,7 +10,8 @@ or trademarks are used.
 ## Install
 
 ```bash
-cd "~/Desktop/TI-36x Pro/emulator"
+git clone https://github.com/ymulahussain/ti36x-pro-emulator
+cd ti36x-pro-emulator
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -e .
@@ -51,7 +52,7 @@ Add to `~/.claude/settings.json` (or run `claude mcp add`):
   "mcpServers": {
     "ti36x": {
       "command": "python",
-      "args": ["/Users/yahya/Desktop/TI-36x Pro/emulator/mcp_server.py"],
+      "args": ["/path/to/ti36x-pro-emulator/mcp_server.py"],
       "env": { "TI36X_API": "http://127.0.0.1:8765" }
     }
   }
@@ -67,7 +68,7 @@ In `~/Library/Application Support/Claude/claude_desktop_config.json`:
   "mcpServers": {
     "ti36x": {
       "command": "python3",
-      "args": ["/Users/yahya/Desktop/TI-36x Pro/emulator/mcp_server.py"]
+      "args": ["/path/to/ti36x-pro-emulator/mcp_server.py"]
     }
   }
 }
