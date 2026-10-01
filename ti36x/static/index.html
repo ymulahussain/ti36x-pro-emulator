@@ -1,68 +1,259 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>TI-36X Pro Emulator</title>
-  <link rel="stylesheet" href="/static/calc.css" />
-</head>
-<body>
-  <div class="app">
-    <div class="calc">
-      <div class="top-brand">
-        <div class="model-name">36X Pro Emulator</div>
-        <div class="solar-panel">
-          <div class="solar-cell"></div>
-          <div class="solar-cell"></div>
-          <div class="solar-cell"></div>
-          <div class="solar-cell"></div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TI-36X Pro Emulator</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/static/calc.css" />
+  </head>
+  <body>
+    <main class="app">
+      <div class="calculator-stage">
+        <div class="calc" aria-label="TI-36X Pro calculator">
+          <svg class="housing" viewBox="0 0 455 1000" aria-hidden="true">
+            <defs>
+              <linearGradient id="case-edge" x1="0" x2="1">
+                <stop stop-color="#393a38" />
+                <stop offset=".08" stop-color="#252624" />
+                <stop offset=".5" stop-color="#181917" />
+                <stop offset=".88" stop-color="#252624" />
+                <stop offset=".96" stop-color="#474845" />
+                <stop offset="1" stop-color="#222320" />
+              </linearGradient>
+              <linearGradient id="face" x1="0" y1="0" x2="1" y2=".5">
+                <stop stop-color="#242523" />
+                <stop offset=".53" stop-color="#20211f" />
+                <stop offset=".83" stop-color="#292a27" />
+                <stop offset="1" stop-color="#393a36" />
+              </linearGradient>
+              <linearGradient id="key-bed" x1="0" y1="0" x2=".8" y2="1">
+                <stop stop-color="#252623" />
+                <stop offset=".6" stop-color="#222320" />
+                <stop offset="1" stop-color="#151613" />
+              </linearGradient>
+              <linearGradient id="clip" x1="0" y1="0" x2="0" y2="1">
+                <stop stop-color="#272825" />
+                <stop offset="1" stop-color="#10110f" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M58 54 Q54 46 66 46 L97 45 Q116 42 132 21 Q145 3 170 3 L287 3 Q312 3 326 23 Q341 43 360 46 L391 48 Q401 49 397 61 Z"
+              fill="url(#clip)"
+              stroke="#10110f"
+              stroke-width="3"
+            />
+            <path
+              d="M112 46 Q131 34 139 21 Q149 11 171 11 L285 11 Q307 11 316 25 Q323 37 342 46 Q226 34 112 46Z"
+              fill="#1a1b18"
+            />
+            <path
+              d="M47 850 Q48 964 112 985 Q158 1001 227 997 Q299 1000 346 981 Q411 954 412 851Z"
+              fill="url(#clip)"
+              stroke="#0c0d0b"
+              stroke-width="3"
+            />
+            <path
+              d="M12 69 Q38 59 60 62 Q230 45 397 62 L443 70 Q453 265 445 503 L437 780 Q433 903 369 951 Q311 987 227 984 Q140 987 83 951 Q21 911 15 792 L5 505 Q1 268 9 76 Q9 71 12 69Z"
+              fill="url(#case-edge)"
+              stroke="#171815"
+              stroke-width="2"
+            />
+            <path
+              d="M59 64 Q229 48 395 64 L411 260 Q424 421 418 609 L414 786 Q413 888 356 936 Q314 968 227 970 Q147 969 100 937 Q42 894 37 787 L28 504 Q29 298 47 160Z"
+              fill="url(#face)"
+              stroke="#11120f"
+              stroke-width="2"
+            />
+            <path
+              d="M62 67 Q49 233 45 403 L48 787 Q52 897 110 931"
+              fill="none"
+              stroke="#4c4d47"
+              stroke-opacity=".4"
+            />
+            <path
+              d="M394 68 Q407 231 414 368 Q421 405 389 407 L331 410 Q281 410 274 446 Q265 484 298 504 Q312 513 337 513 L389 512 Q408 512 410 534 L405 785 Q402 889 344 931 Q300 961 227 961 Q152 961 108 930 Q57 893 54 794 L51 550 Q49 481 56 405 L60 269 Q61 243 79 241 L380 240 Q399 242 401 262 L406 366 Q407 390 384 391 L79 391 Q58 390 57 372"
+              fill="url(#key-bed)"
+              stroke="#10110e"
+              stroke-opacity=".8"
+              stroke-width="2"
+            />
+            <path
+              d="M401 76 Q416 239 421 369 Q425 411 390 415 L337 418 Q291 418 284 448 Q277 477 303 495"
+              fill="none"
+              stroke="#585951"
+              stroke-opacity=".23"
+            />
+            <path
+              d="M58 873 Q56 902 75 906 L101 910"
+              fill="none"
+              stroke="#080907"
+              stroke-width="5"
+              stroke-linecap="round"
+            />
+            <path
+              d="M104 951 Q224 986 349 949"
+              fill="none"
+              stroke="#373832"
+              stroke-opacity=".5"
+              stroke-width="3"
+            />
+          </svg>
+          <div class="model-name" aria-label="TI-36X Pro">
+            <span>TI-</span><strong>36X Pro</strong>
+          </div>
+          <div class="solar-panel" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i>
+          </div>
+          <div class="manufacturer" aria-label="Texas Instruments">
+            <svg viewBox="0 0 28 28" aria-hidden="true">
+              <path
+                d="M4 3h8v7h7l3 3 4 1-2 9-6 3-5-6-4 1-2-5-5-1V9h2Z"
+                fill="currentColor"
+              />
+              <text
+                x="8"
+                y="20"
+                fill="#242522"
+                font-family="Georgia,serif"
+                font-style="italic"
+                font-weight="bold"
+                font-size="19"
+              >
+                ti
+              </text>
+            </svg>
+            <span>Texas Instruments</span>
+          </div>
+          <div class="screen-bezel">
+            <div
+              class="screen"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              <div class="status-bar">
+                <span id="status-2nd" class="status-pill">2nd</span>
+                <span id="status-mode" class="status-pill">NORMAL</span>
+                <span id="status-fmt" class="status-pill">FLOAT</span>
+                <span id="status-angle" class="status-pill active">DEG</span>
+                <span class="lcd-arrows" aria-hidden="true">▴▾</span>
+              </div>
+              <div class="lcd-lines">
+                <div id="lcd-history-entry" class="history-entry"></div>
+                <div id="lcd-history-result" class="history-result"></div>
+                <div class="entry-line" id="entry-line">&nbsp;</div>
+                <div class="result-line" id="result-line">0</div>
+              </div>
+              <div class="error-line" id="error-line"></div>
+              <div
+                class="calculator-menu"
+                id="calculator-menu"
+                aria-label="Calculator menu"
+                hidden
+              ></div>
+            </div>
+          </div>
+          <div class="control-strip">
+            <div class="control-left">
+              <div class="key-slot">
+                <span class="shift" aria-hidden="true"></span
+                ><button type="button" class="key key-2nd" data-name="2nd">
+                  <span class="label">2nd</span>
+                </button>
+              </div>
+              <div class="key-slot">
+                <span class="shift" aria-hidden="true">quit</span
+                ><button
+                  type="button"
+                  class="key key-mode"
+                  data-name="mode"
+                  aria-label="mode (2nd: quit)"
+                >
+                  <span class="label">mode</span>
+                </button>
+              </div>
+              <div class="key-slot">
+                <span class="shift" aria-hidden="true">insert</span
+                ><button
+                  type="button"
+                  class="key key-mode"
+                  data-name="delete"
+                  aria-label="delete (2nd: insert)"
+                >
+                  <span class="label">delete</span>
+                </button>
+              </div>
+            </div>
+            <div class="nav-pad">
+              <button
+                type="button"
+                class="nav-btn nav-up"
+                data-name="up"
+                aria-label="Up"
+              ></button>
+              <button
+                type="button"
+                class="nav-btn nav-left"
+                data-name="left"
+                aria-label="Left"
+              ></button>
+              <button
+                type="button"
+                class="nav-btn nav-right"
+                data-name="right"
+                aria-label="Right"
+              ></button>
+              <button
+                type="button"
+                class="nav-btn nav-down"
+                data-name="down"
+                aria-label="Down"
+              ></button>
+              <div class="nav-hub"></div>
+            </div>
+          </div>
+          <div class="menu-row" id="menu-row"></div>
+          <div class="keys" id="keys"></div>
         </div>
       </div>
-
-      <div class="screen">
-        <div class="status-bar">
-          <span id="status-2nd" class="status-pill">2ND</span>
-          <span id="status-angle" class="status-pill">DEG</span>
-          <span id="status-mode" class="status-pill">NORMAL</span>
-          <span id="status-fmt" class="status-pill">FLOAT</span>
-        </div>
-        <div class="entry-line" id="entry-line">&nbsp;</div>
-        <div class="result-line" id="result-line">0</div>
-        <div class="error-line" id="error-line"></div>
-      </div>
-
-      <div class="control-strip">
-        <div class="control-left">
-          <button class="key key-2nd" data-name="2nd"><div class="label">2nd</div></button>
-          <button class="key key-mode" data-name="mode">
-            <div class="shift">quit</div><div class="label">mode</div>
-          </button>
-          <button class="key key-mode" data-name="delete">
-            <div class="shift">insert</div><div class="label">del</div>
-          </button>
-        </div>
-        <div class="nav-pad">
-          <button class="nav-btn nav-up"    data-name="up">▲</button>
-          <button class="nav-btn nav-left"  data-name="left">◀</button>
-          <button class="nav-btn nav-right" data-name="right">▶</button>
-          <button class="nav-btn nav-down"  data-name="down">▼</button>
-          <div class="nav-hub"></div>
-        </div>
-      </div>
-
-      <div class="menu-row" id="menu-row"></div>
-      <div class="keys" id="keys"></div>
-    </div>
-
-    <aside class="sidebar">
-      <h2>History</h2>
-      <ul id="history"></ul>
-      <h2>Connect</h2>
-      <p><code>HTTP :8765</code></p>
-      <p><code>MCP: ti36x</code></p>
-      <p class="hint">Click keys, type on your keyboard, or drive via API / MCP.</p>
-      <button id="reset-btn">Reset</button>
-    </aside>
-  </div>
-  <script src="/static/calc.js"></script>
-</body>
+      <details class="workspace-tools" id="workspace-tools">
+        <summary>
+          <span>History &amp; tools</span
+          ><span id="connection-status" role="status">Connecting…</span>
+        </summary>
+        <aside class="sidebar" aria-label="Emulator tools">
+          <p class="prompt-line" id="prompt-line" role="status"></p>
+          <section id="feature-panel" hidden>
+            <h2 id="feature-title"></h2>
+            <form id="feature-form"></form>
+          </section>
+          <pre id="feature-result" hidden aria-live="polite"></pre>
+          <h2>History</h2>
+          <ul id="history"></ul>
+          <h2>Shortcuts</h2>
+          <div
+            class="utility-keys"
+            id="utility-keys"
+            aria-label="Function shortcuts"
+          ></div>
+          <div class="tool-actions">
+            <button id="reset-btn" type="button">Reset calculator</button
+            ><button id="reconnect-btn" type="button">Reconnect</button>
+          </div>
+          <p class="hint">
+            Type numbers and operations, use arrow keys to move, Enter to
+            calculate, and Escape to clear. Press 2nd for a blue legend; repeat
+            a function key to cycle its functions.
+          </p>
+          <p class="hint">
+            Independent emulator. TI‑36X Pro and Texas Instruments are
+            trademarks of Texas Instruments. This project is not affiliated with
+            or endorsed by TI.
+          </p>
+        </aside>
+      </details>
+    </main>
+    <script src="/static/calc.js"></script>
+  </body>
 </html>

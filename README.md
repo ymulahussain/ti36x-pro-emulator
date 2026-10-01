@@ -1,11 +1,12 @@
 # 36X Pro Emulator
 
-A browser-based emulator of a scientific calculator inspired by the 36X Pro
-form factor, with an HTTP API and an MCP server so AI assistants can drive it
+A browser-based TI-36X Pro emulator with a face modeled on the supplied hardware
+photo, an HTTP API and an MCP server so AI assistants can drive it
 live while you watch each keypress animate in the browser.
 
-This is an independent, unaffiliated educational project. No vendor branding
-or trademarks are used.
+This is an independent, unaffiliated educational project. TI-36X Pro and Texas
+Instruments are trademarks of Texas Instruments; their appearance identifies
+the calculator being emulated and does not imply endorsement.
 
 ## Install
 
@@ -26,6 +27,12 @@ python run.py
 
 Click keys, or type on your keyboard (digits, + − × ÷ ^ ( ) = Enter Esc ←).
 
+The face follows the supplied calculator photo: contoured black housing,
+six solar cells, gray LCD, oval function keys, gray number keys and blue
+secondary legends. Menus stay inside the LCD. Open **History & tools** below
+the calculator for history, reset, extra shortcuts and advanced input forms.
+The face scales as a unit on smaller screens.
+
 ## HTTP API
 
 | Method | Path          | Body                               | Purpose                          |
@@ -36,6 +43,8 @@ Click keys, or type on your keyboard (digits, + − × ÷ ^ ( ) = Enter Esc ←)
 | POST   | `/press_seq`  | `{"keys":["5","add","3","enter"]}` | press a list, animated           |
 | POST   | `/expr`       | `{"expression":"2+2"}`             | evaluate an expression directly  |
 | POST   | `/reset`      |                                    | reset state                      |
+| GET    | `/panel`      |                                    | fields for the selected workflow |
+| POST   | `/feature`    | `{"operation":"table","parameters":{"expression":"x(36-x)","start":15,"step":3,"count":4}}` | advanced calculation |
 | GET    | `/events`     |                                    | SSE stream of state updates      |
 
 ## MCP server
@@ -51,7 +60,7 @@ Add to `~/.claude/settings.json` (or run `claude mcp add`):
 {
   "mcpServers": {
     "ti36x": {
-      "command": "python",
+      "command": "/path/to/ti36x-pro-emulator/.venv/bin/python",
       "args": ["/path/to/ti36x-pro-emulator/mcp_server.py"],
       "env": { "TI36X_API": "http://127.0.0.1:8765" }
     }
@@ -67,27 +76,78 @@ In `~/Library/Application Support/Claude/claude_desktop_config.json`:
 {
   "mcpServers": {
     "ti36x": {
-      "command": "python3",
+      "command": "/path/to/ti36x-pro-emulator/.venv/bin/python",
       "args": ["/path/to/ti36x-pro-emulator/mcp_server.py"]
     }
   }
 }
 ```
 
-## What's implemented
+## Guidebook behavior
 
-**v1 (core):** digits, `+ − × ÷`, parentheses, `^`, `x²`, `x⁻¹`, `√`, `π`, `e`,
-`sin cos tan` (with DEG/RAD/GRAD), `asin acos atan`, `log ln`, `10^x`, `eˣ`,
-scientific entry (`EE`), `(-)` unary minus, `ans`, history, fraction entry,
-`2nd` shift, `clear`, `delete`, cursor `← →`, mode cycling.
+The supplied TI-36X Pro guidebook is the behavioral reference. See
+[compatibility and remaining differences](docs/guidebook-compatibility.md).
+This is an independent implementation, not a firmware or pixel-exact emulator.
 
-Evaluation uses SymPy, so exact results like `π/4`, `√2`, `3/4` come out exact
-unless the float format is FIX/SCI/ENG.
+Repeated presses cycle multi-tap keys: sin → asin → sinh → asinh; ln → log;
+exp → 10^x; π → e → i; factorial → nCr → nPr; x → y → z → t → a → b → c → d.
+`mode` opens a settings menu for angle units, numeric notation, decimal places,
+complex format, number base and Classic/MathPrint entry. Arrows navigate;
+Enter selects; Clear or 2nd + mode exits.
 
-**Coming next (mode hooks already in place):** matrix, vector, stats (1-var /
-2-var), numeric equation solver, polynomial solver, linear-system solver,
-table mode, base-n, complex, distributions. These modes exist in the state
-machine but their key handlers need to be filled in — happy to extend.
+Normal calculations support exact fractions, roots, π, arithmetic, chained
+answers, scientific entry, trig/hyperbolics, logarithms, number functions,
+probability, memory and history. Enter closes open parentheses. `2nd + sq`
+enters a square root; `2nd + 7` starts mixed-number entry and `2nd + frac`
+selects the reciprocal. The supplemental `1/x` button gives a reciprocal.
+Store selects one of eight variables using
+the variable key, and commits on Enter. On/off preserves state until the server
+restarts; reset requires confirmation.
+
+The blue shortcuts open advanced input panels: calculus, statistics and
+regressions, distributions, tables, matrices, vectors, solvers, expressions,
+constants, conversions, complex numbers and number bases. Panels use ordinary
+expressions and JSON arrays for data; they show the parameter names accepted
+by the HTTP `/feature` endpoint and MCP `calculate_feature` tool. For example:
+
+```json
+{"operation":"system","parameters":{"coefficients":[[1,1],[1,-2]],"rhs":[1,3]}}
+```
+
+This returns x = 5/3 and y = -2/3 and stores them in the calculator's variables.
+Use `/keys` for keypad/shortcut metadata and `/panel` for the selected input form.
+Invalid request bodies return HTTP 422 before mutating calculator state.
+Calculation errors remain visible in the returned state. Animated sequences are
+serialized with other mutations so concurrent clients cannot mix their keys.
+Run one server worker: this is one shared calculator, not a per-user service.
+
+## Development checks
+
+```bash
+python -m pip install -e '.[test]'
+python -m unittest discover -s tests -v
+python -m pip check
+```
+
+The MCP SDK dependency is constrained to v1 because this project uses FastMCP.
+Built wheels include the browser assets.
+
+The original LCD font is bundled and requires no external font service. To
+regenerate it, install `fonttools[woff]` in a development environment and run
+`python tools/build_lcd_font.py`. This is optional and not needed to run the app.
+
+For optional browser tests, start the calculator, install Playwright outside
+this repository, and point it at an installed Chromium binary:
+
+```bash
+npm install --prefix /tmp/ti36x-browser-tools playwright
+NODE_PATH=/tmp/ti36x-browser-tools/node_modules \
+PLAYWRIGHT_CHROMIUM_EXECUTABLE=/usr/bin/chromium \
+node tests/browser.cjs
+```
+
+`CALCULATOR_URL` overrides the browser test's local API address. The browser
+test resets calculator state; run it before an interactive session.
 
 ## Driving it from AI
 
