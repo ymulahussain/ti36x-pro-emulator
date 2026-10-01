@@ -8,12 +8,25 @@ dependencies = [
     "uvicorn[standard]>=0.27",
     "sympy>=1.12",
     "pydantic>=2.5",
-    "mcp>=1.0",
+    "mcp>=1.0,<2",
 ]
+
+[project.optional-dependencies]
+test = ["httpx>=0.27,<1"]
+
+[project.scripts]
+ti36x-emulator = "run:main"
+ti36x-mcp = "mcp_server:main"
 
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+py-modules = ["run", "mcp_server"]
+
 [tool.setuptools.packages.find]
 include = ["ti36x*"]
+
+[tool.setuptools.package-data]
+ti36x = ["static/*.html", "static/*.css", "static/*.js", "static/*.woff2"]
